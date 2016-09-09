@@ -30,16 +30,7 @@ class TestSprayApiService()(implicit val context: ActorContext) {
     ~> unmarshal[String]
   )
 
-//
-//  def pipeline[cl: FromResponseUnmarshaller]() = (
-//    logRequest
-//    ~> sendReceive
-//    ~> logResponse
-//    ~> unmarshal[cl]
-//  )
-
   def get(url: String): Future[String] = {
-//    pipeline[String]() {
     pipeline {
       Get(url)
     }
@@ -91,7 +82,6 @@ class ServiceSupervisorActor extends Actor {
 }
 
 object SprayApiServiceSeedNodeApp extends App {
-
   val cfg = ConfigFactory.parseString(s"akka.cluster.roles=[TEST]")
     .withFallback(ConfigFactory.parseString("akka.remote.netty.tcp.hostname=127.0.0.1"))
     .withFallback(ConfigFactory.parseString("akka.remote.netty.tcp.port=2551"))
